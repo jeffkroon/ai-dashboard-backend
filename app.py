@@ -117,18 +117,18 @@ Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.ge
 
     if data.get("selectedTemplate") == "AI_generated":
         user_prompt = f"""
-        Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
+    Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
 
-        Ensure that the product remains exactly the same as the original — no changes to shape, size, color, or material. The {data.get("productnaam", " ")} must stay consistent across all images.
+    Ensure that the product remains exactly the same as the original — no changes to shape, size, color, or material. The {data.get("productnaam", " ")} must stay consistent across all images.
 
-        Take into account the selected environment: {template_info, ""}, including background elements, textures, and lighting direction. The background must match the required consistency for the setting.
+    Take into account the selected environment: {template_info}, including background elements, textures, and lighting direction. The background must match the required consistency for the setting.
 
-        Include any extra descriptions provided: {data.get("extraDescription", "")}.
-        """
-        
-        completion = openai.Completions.create(
+    Include any extra descriptions provided: {data.get("extraDescription", "")}.
+    """
+    
+        completion = openai.Completion.create(
             model="gpt-4",
-            prompt=user_prompt,
+            prompt=SYSTEM_PROMPT + "\n" + user_prompt,  # SYSTEM_PROMPT toegevoegd hier
             temperature=0.9,
             max_tokens=400
         )
@@ -136,6 +136,7 @@ Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.ge
         return jsonify({"prompt": result})
     if data.get("selectedTemplate") != "AI_generated":
         return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
+
     try:
         user_prompt = f"""
 Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
@@ -147,12 +148,12 @@ Take into account the selected environment: {template_info, ""}, including backg
 Include any extra descriptions provided: {data.get("extraDescription", "")}.
 """
         
-        completion = openai.Completions.create(
-    model="gpt-4",
-    prompt=user_prompt,
-    temperature=0.9,
-    max_tokens=400
-)
+        completion = openai.Completion.create(
+            model="gpt-4",
+            prompt=user_prompt,
+            temperature=0.9,
+            max_tokens=400
+        )
         result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
