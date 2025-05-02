@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 import openai
+
+client = openai(api_key=os.getenv("OPENAI_API_KEY"))
 import os
 from dotenv import load_dotenv
 import time
@@ -12,7 +14,6 @@ RATE_PERIOD = 600  # 10 minutes
 
 load_dotenv(dotenv_path='/etc/secrets/OPENAI_API_KEY')
 print("🔑 Loaded OpenAI key:", os.getenv("OPENAI_API_KEY")[:10], "..." if os.getenv("OPENAI_API_KEY") else "❌ NOT FOUND")
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 if openai.api_key:
     print("❌ OpenAI API-sleutel gevonden!")
@@ -125,13 +126,11 @@ Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.ge
 
     Include any extra descriptions provided: {data.get("extraDescription", "")}.
     """
-    
-        completion = openai.Completion.create(
-            model="gpt-4",
-            prompt=SYSTEM_PROMPT + "\n" + user_prompt,  # SYSTEM_PROMPT toegevoegd hier
-            temperature=0.9,
-            max_tokens=400
-        )
+
+        completion = client.completions.create(model="gpt-4",
+        prompt=SYSTEM_PROMPT + "\n" + user_prompt,  # SYSTEM_PROMPT toegevoegd hier
+        temperature=0.9,
+        max_tokens=400)
         result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     if data.get("selectedTemplate") != "AI_generated":
@@ -147,13 +146,11 @@ Take into account the selected environment: {template_info, ""}, including backg
 
 Include any extra descriptions provided: {data.get("extraDescription", "")}.
 """
-        
-        completion = openai.Completion.create(
-            model="gpt-4",
-            prompt=user_prompt,
-            temperature=0.9,
-            max_tokens=400
-        )
+
+        completion = client.completions.create(model="gpt-4",
+        prompt=user_prompt,
+        temperature=0.9,
+        max_tokens=400)
         result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
