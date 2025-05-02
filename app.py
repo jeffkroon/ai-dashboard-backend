@@ -14,8 +14,9 @@ load_dotenv()
 print("🔑 Loaded OpenAI key:", os.getenv("OPENAI_API_KEY")[:10], "..." if os.getenv("OPENAI_API_KEY") else "❌ NOT FOUND")
 load_dotenv(dotenv_path='/etc/secrets/OPENAI_API_KEY')
 openai.api_key = os.getenv("OPENAI_API_KEY")
-if not openai.api_key:
-    print("❌ OpenAI API-sleutel niet gevonden!")
+
+if openai.api_key:
+    print("❌ OpenAI API-sleutel gevonden!")
 
 app = Flask(__name__)
 CORS(app)
