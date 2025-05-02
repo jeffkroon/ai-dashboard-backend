@@ -126,16 +126,13 @@ Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.ge
         Include any extra descriptions provided: {data.get("extraDescription", "")}.
         """
         
-        completion = openai.ChatCompletion.create(
+        completion = openai.Completions.create(
             model="gpt-4",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt}
-            ],
+            prompt=user_prompt,
             temperature=0.9,
             max_tokens=400
         )
-        result = completion.choices[0].message["content"].strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
+        result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     if data.get("selectedTemplate") != "AI_generated":
         return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
@@ -156,7 +153,7 @@ Include any extra descriptions provided: {data.get("extraDescription", "")}.
     temperature=0.9,
     max_tokens=400
 )
-        result = completion.choices[0].message["content"].strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
+        result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
         print("❌ Backend error:", e)
