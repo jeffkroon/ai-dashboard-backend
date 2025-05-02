@@ -1,7 +1,6 @@
 from openai import OpenAI
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 import os
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import time
