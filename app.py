@@ -1,21 +1,18 @@
-import os
-import time
 import openai
+import os
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+import time
 from collections import defaultdict
 from flask_cors import CORS
 
-client = openai(api_key=os.getenv("OPENAI_API_KEY"))
 request_log = defaultdict(list)
 RATE_LIMIT = 10
 RATE_PERIOD = 600  # 10 minutes
 
-load_dotenv(dotenv_path='/etc/secrets/OPENAI_API_KEY')
+load_dotenv()
 print("🔑 Loaded OpenAI key:", os.getenv("OPENAI_API_KEY")[:10], "..." if os.getenv("OPENAI_API_KEY") else "❌ NOT FOUND")
-
-if client:
-    print("❌ OpenAI API-sleutel gevonden!")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 CORS(app)
@@ -67,7 +64,6 @@ def generate_prompt():
     print("📦 Inkomende data:", data)
     print("Selected Template:", data.get("selectedTemplate"))  # Log the selected template
     template_instruction = ""
-    template_info = " "
     if data.get("selectedTemplate") == "Bejaardenhuis":
         template_info = """
         Toon een looprek in een ruime, veilige woonkameromgeving die is ingericht voor ouderen. De ruimte heeft warme houten vloeren, een lichtgrijze of beige muur, en is ingericht met comfortabele, klassieke meubels zoals een zachte fauteuil, een houten bijzettafel met een leeslamp, en een vloerkleed met antislip. Laat natuurlijk daglicht binnenvallen via een groot raam met transparante gordijnen. Het looprek staat iets links van het midden, volledig zichtbaar, met ongeveer 2/4 van de ruimte rechts leeg voor tekst of USP’s. De compositie is warm, huiselijk en functioneel, met kleine details zoals een plant op de vensterbank of een leesbril op tafel. Geen visuele afleiding zoals snoeren of rommel. Resolutie: 2000 x 2000 pixels.
@@ -115,26 +111,8 @@ Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.ge
     print("📨 Gebruikersprompt:")
     print(user_prompt)
 
-    if data.get("selectedTemplate") == "AI_generated":
-        user_prompt = f"""
-    Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
-
-    Ensure that the product remains exactly the same as the original — no changes to shape, size, color, or material. The {data.get("productnaam", " ")} must stay consistent across all images.
-
-    Take into account the selected environment: {template_info}, including background elements, textures, and lighting direction. The background must match the required consistency for the setting.
-
-    Include any extra descriptions provided: {data.get("extraDescription", "")}.
-    """
-
-        completion = client.completions.create(model="gpt-4",
-        prompt=SYSTEM_PROMPT + "\n" + user_prompt,  # SYSTEM_PROMPT toegevoegd hier
-        temperature=0.9,
-        max_tokens=400)
-        result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
-        return jsonify({"prompt": result})
     if data.get("selectedTemplate") != "AI_generated":
         return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
-
     try:
         user_prompt = f"""
 Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
@@ -145,23 +123,21 @@ Take into account the selected environment: {template_info, ""}, including backg
 
 Include any extra descriptions provided: {data.get("extraDescription", "")}.
 """
-
-        completion = client.completions.create(model="gpt-4",
-        prompt=user_prompt,
-        temperature=0.9,
-        max_tokens=400)
-        result = completion.choices[0].text.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
+        
+        completion = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.9,
+            max_tokens=400
+        )
+        result = completion.choices[0].message["content"].strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
         print("❌ Backend error:", e)
         return jsonify({"error": str(e)}), 500
 
-
-# Root route definition, responds with a simple message or health check
-@app.route("/", methods=["GET"])
-def root():
-    return jsonify({"status": "ok", "message": "AI Prompt Dashboard backend is running."})
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Haalt de poort op die Render specificeert of gebruikt 5000
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
