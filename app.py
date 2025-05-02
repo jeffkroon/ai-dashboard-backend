@@ -139,6 +139,12 @@ Include any extra descriptions provided: {data.get("extraDescription", "")}.
         print("❌ Backend error:", e)
         return jsonify({"error": str(e)}), 500
 
+
+# Root route definition, responds with a simple message or health check
+@app.route("/", methods=["GET"])
+def root():
+    return jsonify({"status": "ok", "message": "AI Prompt Dashboard backend is running."})
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 1000))  # Haalt de poort op die Render specificeert of gebruikt 5000
     app.run(host="0.0.0.0", port=port)
