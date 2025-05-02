@@ -115,6 +115,10 @@ Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.ge
     print("📨 Gebruikersprompt:")
     print(user_prompt)
 
+    if data.get("selectedTemplate") == "AI_generated":
+        # Verwijder tijdelijk de OpenAI-aanroep
+        print("Simuleer AI-gegenereerde prompt zonder OpenAI-aanroep")
+        return jsonify({"prompt": "Simuleer AI-generated prompt."})
     if data.get("selectedTemplate") != "AI_generated":
         return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
     try:
