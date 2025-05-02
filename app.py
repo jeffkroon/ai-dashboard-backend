@@ -1,12 +1,12 @@
+import os
+import time
 from flask import Flask, request, jsonify
 from openai import OpenAI
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-import os
 from dotenv import load_dotenv
-import time
 from collections import defaultdict
 from flask_cors import CORS
 
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 request_log = defaultdict(list)
 RATE_LIMIT = 10
 RATE_PERIOD = 600  # 10 minutes
