@@ -150,15 +150,12 @@ Take into account the selected environment: {template_info, ""}, including backg
 Include any extra descriptions provided: {data.get("extraDescription", "")}.
 """
         
-        completion = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=0.9,
-            max_tokens=400
-        )
+        completion = openai.Completions.create(
+    model="gpt-4",
+    prompt=user_prompt,
+    temperature=0.9,
+    max_tokens=400
+)
         result = completion.choices[0].message["content"].strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
