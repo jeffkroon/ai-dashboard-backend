@@ -68,6 +68,7 @@ def generate_prompt():
     print("📦 Inkomende data:", data)
     print("Selected Template:", data.get("selectedTemplate"))  # Log the selected template
     template_instruction = ""
+    template_info = " "
     if data.get("selectedTemplate") == "Bejaardenhuis":
         template_info = """
         Toon een looprek in een ruime, veilige woonkameromgeving die is ingericht voor ouderen. De ruimte heeft warme houten vloeren, een lichtgrijze of beige muur, en is ingericht met comfortabele, klassieke meubels zoals een zachte fauteuil, een houten bijzettafel met een leeslamp, en een vloerkleed met antislip. Laat natuurlijk daglicht binnenvallen via een groot raam met transparante gordijnen. Het looprek staat iets links van het midden, volledig zichtbaar, met ongeveer 2/4 van de ruimte rechts leeg voor tekst of USP’s. De compositie is warm, huiselijk en functioneel, met kleine details zoals een plant op de vensterbank of een leesbril op tafel. Geen visuele afleiding zoals snoeren of rommel. Resolutie: 2000 x 2000 pixels.
