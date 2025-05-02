@@ -1,4 +1,6 @@
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 import os
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
@@ -12,7 +14,6 @@ RATE_PERIOD = 600  # 10 minutes
 
 load_dotenv()
 print("🔑 Loaded OpenAI key:", os.getenv("OPENAI_API_KEY")[:10], "..." if os.getenv("OPENAI_API_KEY") else "❌ NOT FOUND")
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 CORS(app)
@@ -123,17 +124,15 @@ Take into account the selected environment: {template_info, ""}, including backg
 
 Include any extra descriptions provided: {data.get("extraDescription", "")}.
 """
-        
-        completion = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=0.9,
-            max_tokens=400
-        )
-        result = completion.choices[0].message["content"].strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
+
+        completion = client.chat.completions.create(model="gpt-4",
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_prompt}
+        ],
+        temperature=0.9,
+        max_tokens=400)
+        result = completion.choices[0].message.content.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
         print("❌ Backend error:", e)
