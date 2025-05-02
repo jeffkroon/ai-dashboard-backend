@@ -14,7 +14,7 @@ RATE_PERIOD = 600  # 10 minutes
 load_dotenv(dotenv_path='/etc/secrets/OPENAI_API_KEY')
 print("🔑 Loaded OpenAI key:", os.getenv("OPENAI_API_KEY")[:10], "..." if os.getenv("OPENAI_API_KEY") else "❌ NOT FOUND")
 
-if openai.api_key:
+if client:
     print("❌ OpenAI API-sleutel gevonden!")
 
 app = Flask(__name__)
