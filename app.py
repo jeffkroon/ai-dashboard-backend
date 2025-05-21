@@ -111,6 +111,8 @@ De achtergrond moet volledig realistisch en natuurlijk ogen, in lijn met de volg
 - Geen enkel product of mens mag aanwezig zijn.
 
 !IMPORTANT: Genereer uitsluitend een achtergrond. Het product wordt later toegevoegd via compositing.
+
+Verwijder het product maar laat de rest staan
 """
 
     print("📨 Gebruikersprompt:")
