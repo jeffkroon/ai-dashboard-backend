@@ -60,7 +60,7 @@ def generate_prompt():
     template_instruction = ""
     if data.get("selectedTemplate") == "Bejaardenhuis":
         template_info = """
-        Genereer een warme, uitnodigende woonkamer in Scandinavische stijl, met lichtgrijze muren, houten vloer in licht eiken, en zachte daglichtinval van links. De ruimte is ruim, realistisch, opgeruimd en bevat eventueel subtiele elementen zoals een fauteuil of bijzettafel aan de rand van het beeld. Het midden van de afbeelding moet volledig leeg blijven — geen meubels, objecten of schaduwen. Alleen achtergrond en sfeer. Resolutie: 2000 x 2000 pixels.
+        Genereer een warme, uitnodigende woonkamer in een bejaardenhuis, met lichtgrijze muren, houten vloer in licht eiken, en zachte daglichtinval van links. De ruimte is ruim, realistisch, opgeruimd en bevat eventueel subtiele elementen zoals een fauteuil of bijzettafel aan de rand van het beeld. Het midden van de afbeelding moet volledig leeg blijven — geen meubels, objecten of schaduwen. Alleen achtergrond en sfeer. Resolutie: 2000 x 2000 pixels.
         """
     elif data.get("selectedTemplate") == "Sportschool":
         template_info = """
