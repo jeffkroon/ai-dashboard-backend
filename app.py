@@ -95,42 +95,26 @@ def generate_prompt():
 
 
     user_prompt = f"""
-    
-    
-{template_instruction}
-Maak een afbeelding van de ({data.get("productnaam", " ")}) vanuit een  {data.get("view", "")} zicht.
+Je taak is om een fotorealistische achtergrondafbeelding te genereren waarin later een product (de {data.get("productnaam", " ")}) geplakt zal worden. Gebruik het volgende camerastandpunt: {data.get("view", "")} zicht.
+
+De achtergrond moet volledig realistisch en natuurlijk ogen, in lijn met de volgende omgeving:
+
 {template_info}
 
+⚠️ Belangrijke eisen:
+- Het midden van de afbeelding moet volledig leeg blijven: geen meubels, geen objecten, geen decoratie, geen schaduwen.
+- De belichting en het perspectief moeten zo gekozen zijn dat het geplakte product later natuurlijk integreert.
+- De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
+- Geen enkel product of mens mag aanwezig zijn.
+
+Genereer uitsluitend een achtergrond. Het product wordt later toegevoegd via compositing.
 """
+
     print("📨 Gebruikersprompt:")
     print(user_prompt)
 
     if data.get("selectedTemplate") != "AI_generated":
-        return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
-    try:
-        user_prompt = f"""
-Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
-
-Ensure that the product remains exactly the same as the original — no changes to shape, size, color, or material. The {data.get("productnaam", " ")} must stay consistent across all images.
-
-Take into account the selected environment: {template_info, ""}, including background elements, textures, and lighting direction. The background must match the required consistency for the setting.
-
-Include any extra descriptions provided: {data.get("extraDescription", "")}.
-"""
-
-        completion = client.chat.completions.create(model="gpt-4",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt}
-        ],
-        temperature=0.9,
-        max_tokens=400)
-        result = completion.choices[0].message.content.strip()
-        return jsonify({"prompt": result})
-    except Exception as e:
-        print("❌ Backend error:", e)
-        return jsonify({"error": str(e)}), 500
-
+        return jsonify({"prompt": user_prompt.strip()})
 
 
 # Nieuwe route voor het genereren van een afbeelding via prompt + upload
