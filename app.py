@@ -121,20 +121,23 @@ Verwijder het product maar laat de rest staan
         return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels"})
     try:
         user_prompt = f"""
-        Je taak is om een korte, visueel nauwkeurige prompt te genereren voor het maken van een fotorealistische achtergrondafbeelding.
-        Deze afbeelding dient als sfeerbeeld waarin wij later een product ({data.get("productnaam", " ")}) handmatig zullen plaatsen via compositing. Jij mag het product zelf dus NIET genereren of beschrijven.
-        ⚠️ Belangrijke vereisten:
-        - Genereer GEEN objecten, meubels of elementen die op het product lijken.
-        - Geen mensen, handen of centrale objecten.
-        - Houd rekening met het gekozen camerastandpunt: {data.get("view", "")} zicht.
-        - Zorg dat belichting en perspectief zo zijn dat het geplakte product er natuurlijk in zal passen.
-        
-        Extra context of wensen:
-        {data.get("extraDescription", "")}
-        """
-        
-        
+Je taak is om een korte, visueel nauwkeurige prompt te genereren voor het maken van een fotorealistische achtergrondafbeelding. Deze afbeelding dient als sfeerbeeld waarin wij later een product ({data.get("productnaam", " ")}) handmatig zullen plaatsen via compositing. Jij mag het product zelf dus NIET genereren of beschrijven.
 
+De achtergrond moet volledig realistisch, sfeervol en visueel consistent zijn met het volgende scenario:
+{template_info}
+
+⚠️ Belangrijke vereisten:
+- Genereer GEEN objecten, meubels of elementen die op het product lijken.
+- Geen mensen, handen of centrale objecten.
+- Houd rekening met het gekozen camerastandpunt: {data.get("view", "")} zicht.
+- Zorg dat belichting en perspectief zo zijn dat het geplakte product er natuurlijk in zal passen.
+- De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
+- Dit is uitsluitend een achtergrond — het product voegen wij zelf toe.
+
+Extra context of wensen:
+{data.get("extraDescription", "")}
+"""
+        
         
         completion = client.chat.completions.create(
             model="gpt-4",
@@ -145,10 +148,15 @@ Verwijder het product maar laat de rest staan
             temperature=0.9,
             max_tokens=400
         )
-        result = completion.choices[0].message.content.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
+        if not completion.choices or not completion.choices[0].message.content:
+            print("❌ Geen geldige output ontvangen van GPT")
+            return jsonify({"error": "OpenAI gaf geen geldige output"}), 500
+        result = completion.choices[0].message.content.strip()
         return jsonify({"prompt": result})
     except Exception as e:
         print("❌ Backend error:", e)
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 
