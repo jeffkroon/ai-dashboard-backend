@@ -121,6 +121,26 @@ Verwijder het product maar laat de rest staan
     if data.get("selectedTemplate") != "AI_generated":
         return jsonify({"prompt": user_prompt.strip()})
 
+    # AI gegenereerde prompt via GPT-4
+    try:
+        completion = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"""{user_prompt}
+
+Extra beschrijving (optioneel): {data.get("extraDescription", "")}
+"""}
+            ],
+            temperature=0.9,
+            max_tokens=400
+        )
+        result = completion.choices[0].message.content.strip()
+        return jsonify({"prompt": result})
+    except Exception as e:
+        print("❌ Backend error bij AI gegenereerde prompt:", e)
+        return jsonify({"error": str(e)}), 500
+
 
 # Nieuwe route voor het genereren van een afbeelding via prompt + upload
 @app.route("/generate-image", methods=["POST"])
