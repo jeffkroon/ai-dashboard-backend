@@ -6,8 +6,7 @@ from dotenv import load_dotenv
 import time
 from collections import defaultdict
 from flask_cors import CORS
-from PIL import Image
-import io
+
 
 request_log = defaultdict(list)
 RATE_LIMIT = 10
