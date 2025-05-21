@@ -95,7 +95,7 @@ def generate_prompt():
 
 
     user_prompt = f"""
-Je taak is om een fotorealistische achtergrondafbeelding te genereren waarin later een product (de {data.get("productnaam", " ")}) geplakt zal worden. Gebruik het volgende camerastandpunt: {data.get("view", "")} zicht.
+Je taak is om een fotorealistische achtergrondafbeelding te genereren waarin later een product (de {data.get("productnaam", " ")}) geplakt zal worden. Dus niet zelf een product genereren. Gebruik het volgende camerastandpunt: {data.get("view", "")} zicht.
 
 De achtergrond moet volledig realistisch en natuurlijk ogen, in lijn met de volgende omgeving:
 
@@ -107,7 +107,7 @@ De achtergrond moet volledig realistisch en natuurlijk ogen, in lijn met de volg
 - De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
 - Geen enkel product of mens mag aanwezig zijn.
 
-Genereer uitsluitend een achtergrond. Het product wordt later toegevoegd via compositing.
+!IMPORTANT: Genereer uitsluitend een achtergrond. Het product wordt later toegevoegd via compositing.
 """
 
     print("📨 Gebruikersprompt:")
