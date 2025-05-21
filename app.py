@@ -23,6 +23,8 @@ You are a professional visual prompt engineer.
 
 You generate short, visually precise prompts for creating a photo-realistic background image. A product image will be composited into this background later using a masked overlay. Your task is to describe only the background setting.
 
+You will be punished if you create the product yourself instead of leaving empty space so that the devloper can paste the product in the image. 
+
 The product is not present in the generation process. Instead, the image must be constructed in such a way that a product can be placed into the center afterward, with seamless integration in terms of lighting, perspective, and realism.
 
 Strict instructions:
@@ -95,13 +97,14 @@ def generate_prompt():
 
 
     user_prompt = f"""
-Je taak is om een fotorealistische achtergrondafbeelding te genereren waarin later een product (de {data.get("productnaam", " ")}) geplakt zal worden. Dus niet zelf een product genereren. Gebruik het volgende camerastandpunt: {data.get("view", "")} zicht.
+Je taak is om een fotorealistische achtergrondafbeelding te genereren waarin later een product (de {data.get("productnaam", " ")}) geplakt zal worden door onze eigen designers. Dus niet zelf een product genereren. Gebruik het volgende camerastandpunt: {data.get("view", "")} zicht.
 
 De achtergrond moet volledig realistisch en natuurlijk ogen, in lijn met de volgende omgeving:
 
 {template_info}
 
 ⚠️ Belangrijke eisen:
+- In het midden van de afbeelding plakken wij zelf een product, dus NIET ZELF het product genereren.
 - Het midden van de afbeelding moet volledig leeg blijven: geen meubels, geen objecten, geen decoratie, geen schaduwen.
 - De belichting en het perspectief moeten zo gekozen zijn dat het geplakte product later natuurlijk integreert.
 - De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
