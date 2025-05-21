@@ -132,7 +132,7 @@ Include any extra descriptions provided: {data.get("extraDescription", "")}.
         ],
         temperature=0.9,
         max_tokens=400)
-        result = completion.choices[0].message.content.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
+        result = completion.choices[0].message.content.strip() + "\n \n   !IMPORTANT Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
         print("❌ Backend error:", e)
