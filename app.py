@@ -117,28 +117,33 @@ Verwijder het product maar laat de rest staan
 
     print("📨 Gebruikersprompt:")
     print(user_prompt)
-
+    
     if data.get("selectedTemplate") != "AI_generated":
-        return jsonify({"prompt": user_prompt.strip()})
-
-    # AI gegenereerde prompt via GPT-4
+        return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
     try:
+        user_prompt = f"""
+Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
+
+Ensure that the product remains exactly the same as the original — no changes to shape, size, color, or material. The {data.get("productnaam", " ")} must stay consistent across all images.
+
+Take into account the selected environment: {template_info, ""}, including background elements, textures, and lighting direction. The background must match the required consistency for the setting.
+
+Include any extra descriptions provided: {data.get("extraDescription", "")}.
+"""
+        
         completion = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": f"""{user_prompt}
-
-Extra beschrijving (optioneel): {data.get("extraDescription", "")}
-"""}
+                {"role": "user", "content": user_prompt}
             ],
             temperature=0.9,
             max_tokens=400
         )
-        result = completion.choices[0].message.content.strip()
+        result = completion.choices[0].message.content.strip() + "\n \n  Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"
         return jsonify({"prompt": result})
     except Exception as e:
-        print("❌ Backend error bij AI gegenereerde prompt:", e)
+        print("❌ Backend error:", e)
         return jsonify({"error": str(e)}), 500
 
 
