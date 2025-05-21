@@ -117,19 +117,24 @@ Verwijder het product maar laat de rest staan
 
     print("📨 Gebruikersprompt:")
     print(user_prompt)
-    
     if data.get("selectedTemplate") != "AI_generated":
-        return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels \n \n  !IMPORTANT: Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
+        return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer dit beeld in 2000 X 2000 pixels"})
     try:
         user_prompt = f"""
-Focus on the product's key features: color, texture, lighting, and perspective. Avoid any unnecessary details, explanations, or storytelling.
+        Je taak is om een korte, visueel nauwkeurige prompt te genereren voor het maken van een fotorealistische achtergrondafbeelding.
+        Deze afbeelding dient als sfeerbeeld waarin wij later een product ({data.get("productnaam", " ")}) handmatig zullen plaatsen via compositing. Jij mag het product zelf dus NIET genereren of beschrijven.
+        ⚠️ Belangrijke vereisten:
+        - Genereer GEEN objecten, meubels of elementen die op het product lijken.
+        - Geen mensen, handen of centrale objecten.
+        - Houd rekening met het gekozen camerastandpunt: {data.get("view", "")} zicht.
+        - Zorg dat belichting en perspectief zo zijn dat het geplakte product er natuurlijk in zal passen.
+        
+        Extra context of wensen:
+        {data.get("extraDescription", "")}
+        """
+        
+        
 
-Ensure that the product remains exactly the same as the original — no changes to shape, size, color, or material. The {data.get("productnaam", " ")} must stay consistent across all images.
-
-Take into account the selected environment: {template_info, ""}, including background elements, textures, and lighting direction. The background must match the required consistency for the setting.
-
-Include any extra descriptions provided: {data.get("extraDescription", "")}.
-"""
         
         completion = client.chat.completions.create(
             model="gpt-4",
