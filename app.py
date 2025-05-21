@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import time
 from collections import defaultdict
 from flask_cors import CORS
+from PIL import Image
+import io
 
 request_log = defaultdict(list)
 RATE_LIMIT = 10
@@ -135,6 +137,29 @@ Include any extra descriptions provided: {data.get("extraDescription", "")}.
         return jsonify({"prompt": result})
     except Exception as e:
         print("❌ Backend error:", e)
+        return jsonify({"error": str(e)}), 500
+
+
+
+# Nieuwe route voor het genereren van een afbeelding via prompt + upload
+@app.route("/generate-image", methods=["POST"])
+def generate_image():
+    prompt = request.form.get("prompt")
+
+    if not prompt:
+        return jsonify({"error": "Prompt is vereist"}), 400
+
+    try:
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size="1024x1024",
+            quality="standard",
+            n=1
+        )
+        return jsonify({"image_url": response.data[0].url})
+    except Exception as e:
+        print("❌ Backend error bij /generate-image:", e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
