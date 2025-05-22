@@ -172,7 +172,7 @@ def generate_image():
             model="gpt-image-1",
             prompt=prompt,
             size="1024x1024",
-            quality="standard",
+            quality="high",
             n=1
         )
         return jsonify({"image_url": response.data[0].url})
