@@ -1,12 +1,10 @@
 from openai import OpenAI
 import os
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import time
 from collections import defaultdict
 from flask_cors import CORS
-
 
 request_log = defaultdict(list)
 RATE_LIMIT = 10
@@ -14,7 +12,7 @@ RATE_PERIOD = 600  # 10 minutes
 
 load_dotenv()
 print("🔑 Loaded OpenAI key:", os.getenv("OPENAI_API_KEY")[:10], "..." if os.getenv("OPENAI_API_KEY") else "❌ NOT FOUND")
-
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY", "").strip())
 app = Flask(__name__)
 CORS(app)
 
