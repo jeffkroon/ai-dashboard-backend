@@ -167,7 +167,7 @@ Extra context of wensen:
 # Nieuwe route voor het genereren van een afbeelding via prompt + upload
 @app.route("/generate-image", methods=["POST"])
 def generate_image():
-    prompt = request.form.get("prompt")
+    prompt = request.form.get("prompt") + "now remove the product"
 
     if not prompt:
         return jsonify({"error": "Prompt is vereist"}), 400
