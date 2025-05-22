@@ -160,7 +160,7 @@ def generate_image():
             prompt=prompt,
             size="1024x1024",
             quality="standard",
-            n=1
+            n=5
         )
         return jsonify({"image_url": response.data[0].url})
     except RateLimitError as e:
