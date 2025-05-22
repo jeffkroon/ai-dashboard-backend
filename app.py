@@ -101,7 +101,7 @@ def generate_prompt():
     print("📨 Gebruikersprompt:")
     print(user_prompt)
     if data.get("selectedTemplate") != "AI_generated":
-        return jsonify({"prompt": user_prompt.strip()+ "\n \n Verwijder nu de stoel, rollator of het product \n genereer eerst de afbeelding voor jezelf met de stoel, rollator of gevraagd product, en verwijder daarna dat product"})
+        return jsonify({"prompt": user_prompt.strip()+ "\n \n Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?"})
     try:
         user_prompt = f"""
 Je taak is om een korte, visueel nauwkeurige prompt te genereren voor het maken van een fotorealistische achtergrondafbeelding. Deze afbeelding dient als sfeerbeeld waarin wij later een product ({data.get("productnaam", " ")}) handmatig zullen plaatsen via compositing. Jij mag het product zelf dus NIET genereren of beschrijven.
