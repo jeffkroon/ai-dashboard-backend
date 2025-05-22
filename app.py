@@ -1,4 +1,4 @@
-from openai import OpenAI
+from openai import OpenAI, RateLimitError, APIConnectionError
 import os
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
@@ -151,8 +151,14 @@ Extra context of wensen:
             return jsonify({"error": "OpenAI gaf geen geldige output"}), 500
         result = completion.choices[0].message.content.strip()
         return jsonify({"prompt": result})
+    except RateLimitError as e:
+        print("❌ Je hebt je OpenAI-quota overschreden:", e)
+        return jsonify({"error": "Je OpenAI-tegoed is op. Controleer je abonnement of betaalinstellingen op platform.openai.com"}), 429
+    except APIConnectionError as e:
+        print("❌ Kan geen verbinding maken met OpenAI:", e)
+        return jsonify({"error": "Verbindingsfout met OpenAI. Probeer het later opnieuw."}), 503
     except Exception as e:
-        print("❌ Backend error:", e)
+        print("❌ Onverwachte backend error:", e)
         import traceback
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
@@ -175,8 +181,16 @@ def generate_image():
             n=1
         )
         return jsonify({"image_url": response.data[0].url})
+    except RateLimitError as e:
+        print("❌ Je hebt je OpenAI-quota overschreden:", e)
+        return jsonify({"error": "Je OpenAI-tegoed is op. Controleer je abonnement of betaalinstellingen op platform.openai.com"}), 429
+    except APIConnectionError as e:
+        print("❌ Kan geen verbinding maken met OpenAI:", e)
+        return jsonify({"error": "Verbindingsfout met OpenAI. Probeer het later opnieuw."}), 503
     except Exception as e:
-        print("❌ Backend error bij /generate-image:", e)
+        print("❌ Onverwachte backend error bij /generate-image:", e)
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
