@@ -68,7 +68,7 @@ def generate_prompt():
         """
     elif data.get("selectedTemplate") == "Kantoor":
         template_info = """
-        Genereer een lichte, Scandinavische kantoorruimte met off-white muren, licht houten visgraatvloer en zacht daglicht via transparante gordijnen. Plaats een bureau zonder stoel, zodat wij later zelf via compositioning de stoel kunnen toevoegen, maar oop de afbeelding moet dus niet de stoel staan. Resolutie: 2000 x 2000 pixels.
+        Genereer een fotorealistisch, Scandinavisch kantoorinterieur met een houten visgraatvloer, neutrale muren (lichtgrijs of beige), en een minimalistisch bureau dat exact zo gepositioneerd is dat een bureaustoel er later natuurlijk voor geplaatst kan worden via compositing. Laat ruimte vrij waar normaal een bureaustoel zou staan, maar genereer de stoel zelf NIET. Gebruik zacht natuurlijk daglicht van links. Het beeld moet strak, rustig en realistisch zijn zonder mensen of overbodige objecten. Resolutie: 1024 x 1024 pixels.
         """
     elif data.get("selectedTemplate") == "Fysiotherapie":
         template_info = """
