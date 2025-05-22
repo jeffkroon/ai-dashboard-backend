@@ -103,12 +103,10 @@ De achtergrond moet volledig realistisch en natuurlijk ogen, in lijn met de volg
 
 ⚠️ Belangrijke eisen:
 - In het midden van de afbeelding plakken wij zelf een product, dus NIET ZELF het product genereren.
-- Het midden van de afbeelding moet volledig leeg blijven: geen meubels, geen objecten, geen decoratie, geen schaduwen.
 - De belichting en het perspectief moeten zo gekozen zijn dat het geplakte product later natuurlijk integreert.
 - De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
-- Geen enkel product of mens mag aanwezig zijn.
 
-!IMPORTANT: Genereer uitsluitend een achtergrond. Het product wordt later toegevoegd via compositing.
+Verwijder de stoel of product die je hebt gegenereerd want die willen wij zelf later erin plakken
 
 Verwijder het product maar laat de rest staan
 """
