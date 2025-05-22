@@ -169,10 +169,10 @@ def generate_image():
 
     try:
         response = client.images.generate(
-            model="gpt-image-1",
+            model="dall-e-3",
             prompt=prompt,
             size="1024x1024",
-            quality="high",
+            quality="standard",
             n=1
         )
         return jsonify({"image_url": response.data[0].url})
