@@ -64,7 +64,7 @@ def generate_prompt():
         """
     elif data.get("selectedTemplate") == "Sportschool":
         template_info = """
-        Genereer een moderne, realistische fitnessruimte met rubberen vloer, matgrijze muren en zachte verlichting. Laat het interieur volledig afgewerkt ogen, maar zonder  mensen . Alleen sfeerbeeld, geen product. houdt ruimte vrij voor eentuele toevoeging van product via compositioning. Resolutie: 2000 x 2000 pixels. Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?
+        [kinesiotape] in een [sportschool], weergegeven in een ruime, realistische setting met natuurlijke belichting en een rustige, industriële of sportieve achtergrond. Zorg dat het product goed zichtbaar en scherp gepositioneerd is, met 2/4 lege ruimte aan de rechterzijde van het beeld voor het toevoegen van USP’s of tekst. De compositie moet licht en functioneel, uitnodigend maar doelgericht zijn, met eventueel subtiele decoratieve elementen zoals een moderne trainingsbank, rubber sportvloer of fitnessapparatuur op afstand — zolang ze het product niet visueel overstemmen. Vermijd visuele afleiding zoals drukke patronen of overmatig felle kleuren. De afbeelding moet een extra realistische look hebben, met natuurlijke schaduwen, levensechte materialen en fijne details. Afbeeldingsgrootte: 2000 x 2000 pixels.Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?
         """
     elif data.get("selectedTemplate") == "Kantoor":
         template_info = """
@@ -72,7 +72,7 @@ def generate_prompt():
         """
     elif data.get("selectedTemplate") == "Fysiotherapie":
         template_info = """
-        Genereer een cleane, professionele fysiotherapieruimte met behandelbanken aan de zijkant, neutrale wanden en anatomieposters. laat lege ruimte over voor de plaatsing van een product via compostioning. Resolutie: 2000 x 2000 pixels. Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?
+        Maak een afbeelding [rollator] in een [fysiopraktijk], weergegeven in een ruime, realistische setting met natuurlijke belichting en een rustige, neutrale achtergrond. Zorg dat het product goed zichtbaar en scherp gepositioneerd is, met 2/4 lege ruimte aan de rechterzijde van het beeld voor het toevoegen van USP’s of tekst. De compositie moet warm en licht, functioneel en uitnodigend zijn, met eventueel subtiele decoratieve elementen zoals een moderne behandelbank of neutraal meubilair op afstand — maar zonder planten of vloerkleden. De afbeelding moet een extra realistische look hebben, met natuurlijke schaduwen, levensechte materialen en fijne details. Afbeeldingsgrootte: 2000 x 2000 pixels.Genereer eerst voor jezelf een afbeelding met product en stuur mij de afbeelding zonder product erin kan dat?
         """
     elif data.get("selectedTemplate") == "Straat":
         template_info = """
