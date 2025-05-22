@@ -60,19 +60,19 @@ def generate_prompt():
     template_instruction = ""
     if data.get("selectedTemplate") == "Bejaardenhuis":
         template_info = """
-        Genereer een warme, uitnodigende woonkamer in een bejaardenhuis met lichtgrijze muren, houten vloer in licht eiken, en zachte daglichtinval van links. De ruimte moet volledig realistisch en rustig ogen, zonder een centraal object of meubelstuk. Het beeld mag compleet zijn, maar bevat geen product. Alleen sfeer en achtergrond. Resolutie: 2000 x 2000 pixels.
+        Genereer een warme, uitnodigende woonkamer in een bejaardenhuis met lichtgrijze muren, houten vloer in licht eiken, en zachte daglichtinval van links. Ruimte vrij voor plaatsing van een product via compositioning. De ruimte moet volledig realistisch  ogen. Resolutie: 2000 x 2000 pixels.
         """
     elif data.get("selectedTemplate") == "Sportschool":
         template_info = """
-        Genereer een moderne, realistische fitnessruimte met rubberen vloer, matgrijze muren en zachte verlichting. Laat het interieur volledig afgewerkt ogen, maar zonder apparaten, mensen of objecten die als product geïnterpreteerd kunnen worden. Alleen sfeerbeeld, geen product. Resolutie: 2000 x 2000 pixels.
+        Genereer een moderne, realistische fitnessruimte met rubberen vloer, matgrijze muren en zachte verlichting. Laat het interieur volledig afgewerkt ogen, maar zonder  mensen . Alleen sfeerbeeld, geen product. houdt ruimte vrij voor eentuele toevoeging van product via compositioning. Resolutie: 2000 x 2000 pixels.
         """
     elif data.get("selectedTemplate") == "Kantoor":
         template_info = """
-        Genereer een lichte, Scandinavische kantoorruimte met off-white muren, licht houten visgraatvloer en zacht daglicht via transparante gordijnen. Laat eventueel een bureau aan de zijkant zien, maar geen object of meubelstuk centraal. Het beeld moet compleet en realistisch zijn zonder product. Resolutie: 2000 x 2000 pixels.
+        Genereer een lichte, Scandinavische kantoorruimte met off-white muren, licht houten visgraatvloer en zacht daglicht via transparante gordijnen. Plaats een bureau zonder stoel, zodat wij later zelf via compositioning de stoel kunnen toevoegen, maar oop de afbeelding moet dus niet de stoel staan. Resolutie: 2000 x 2000 pixels.
         """
     elif data.get("selectedTemplate") == "Fysiotherapie":
         template_info = """
-        Genereer een cleane, professionele fysiotherapieruimte met behandelbanken aan de zijkant, neutrale wanden en anatomieposters. Geen apparatuur of meubelstuk dat centraal in beeld staat. De afbeelding is bedoeld als volledige achtergrond zonder zichtbaar product. Resolutie: 2000 x 2000 pixels.
+        Genereer een cleane, professionele fysiotherapieruimte met behandelbanken aan de zijkant, neutrale wanden en anatomieposters. laat lege ruimte over voor de plaatsing van een product via compostioning. Resolutie: 2000 x 2000 pixels.
         """
     elif data.get("selectedTemplate") == "Straat":
         template_info = """
@@ -80,7 +80,7 @@ def generate_prompt():
         """
     elif data.get("selectedTemplate") == "Woonkamer":
         template_info = """
-        Genereer een moderne woonkamer in Scandinavische stijl met houten vloer, lichte muren en warme belichting. De kamer mag volledig ingericht zijn, zolang er geen object of meubelstuk centraal staat dat als product kan worden gezien. Geen producten genereren. Resolutie: 2000 x 2000 pixels.
+        Genereer een moderne woonkamer in Scandinavische stijl met houten vloer, lichte muren en warme belichting. De kamer mag volledig ingericht zijn. Zorg ervoor dat er egens op de voorgrond ruimte is zodat wij later via compositioning een product kunnen plakken in die ruimte. Geen producten genereren. Resolutie: 2000 x 2000 pixels.
         """
     elif data.get("selectedTemplate") == "Hal":
         template_info = """
