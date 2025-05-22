@@ -126,6 +126,7 @@ De achtergrond moet volledig realistisch, sfeervol en visueel consistent zijn me
 - Zorg dat belichting en perspectief zo zijn dat het geplakte product er natuurlijk in zal passen.
 - De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
 
+
 Extra context of wensen:
 {data.get("extraDescription", "")}
 """
@@ -168,7 +169,7 @@ def generate_image():
 
     try:
         response = client.images.generate(
-            model="dall-e-3",
+            model="gpt-image-1",
             prompt=prompt,
             size="1024x1024",
             quality="standard",
