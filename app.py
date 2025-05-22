@@ -122,13 +122,9 @@ Je taak is om een korte, visueel nauwkeurige prompt te genereren voor het maken 
 De achtergrond moet volledig realistisch, sfeervol en visueel consistent zijn met het volgende scenario:
 {template_info}
 
-⚠️ Belangrijke vereisten:
-- Genereer GEEN objecten, meubels of elementen die op het product lijken.
-- Geen mensen, handen of centrale objecten.
 - Houd rekening met het gekozen camerastandpunt: {data.get("view", "")} zicht.
 - Zorg dat belichting en perspectief zo zijn dat het geplakte product er natuurlijk in zal passen.
 - De afbeelding moet vierkant zijn: 2000 x 2000 pixels.
-- Dit is uitsluitend een achtergrond — het product voegen wij zelf toe.
 
 Extra context of wensen:
 {data.get("extraDescription", "")}
